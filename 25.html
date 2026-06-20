@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學校行政組織與人員架構網頁 - 底部獨立寬度可調版</title>
+    <style>
+        /* 基礎設定與 Apple 風格字體 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+            background: transparent; 
+            margin: 0;
+            padding: 5px; 
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; 
+        }
+
+        /* 背景流體色彩滾動動畫 */
+        @keyframes gradientScroll {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 大區塊標題 */
+        .page-title {
+            font-size: 24px;         
+            font-weight: 800;        
+            color: #ffffff;          
+            text-align: center;      
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            gap: 8px;
+            margin: 5px auto 10px auto;
+            padding: 10px 30px;      
+            border-radius: 50px;     
+            width: fit-content;      
+            min-width: 450px;
+            box-sizing: border-box;
+            background: linear-gradient(-45deg, #ff6b6b, #ff9f43, #f1c40f, #2ecc71, #3498db, #9b59b6);
+            background-size: 400% 400%; 
+            animation: gradientScroll 10s ease infinite; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); 
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2); 
+        }
+
+        /* 欄位完美靠攏緊湊佈局 */
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px; 
+            justify-content: center; 
+        }
+
+        /* 垂直直列寬度微調 */
+        .grid-column {
+            display: flex;
+            flex-direction: column;
+            gap: 3px; 
+            width: 110px; 
+            align-items: center; 
+        }
+
+        /* 頂部通欄與寬膠囊列佈局 */
+        .top-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 2px;
+            /* ⚙️ 距離調整：以下 gap 控制「大基本資訊膠囊」與「校長膠囊」之間的上下間距 (目前為 10px) */
+            gap: 20px; 
+        }
+
+        /* 藥丸型通用儲存格 */
+        .card {
+            background: #ffffff;
+            border-radius: 20px; 
+            padding: 6px 12px;   
+            box-sizing: border-box;
+            color: #2c3e50;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            gap: 2px;           
+            line-height: 1.1;   
+            border: 1px solid rgba(255, 255, 255, 1);
+            transition: all 0.22s cubic-bezier(0.25, 0.8, 0.25, 1);
+            user-select: none;
+            text-align: center;
+            width: 100%; 
+        }
+        .grid-column .card {
+            padding: 6px 4px;
+        }
+
+        /* ℹ️ 頂部基本資訊大整合膠囊專屬置中內排版 */
+        .info-combo-box-center {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* 三行之間的間距 */
+            width: 100%;
+            font-size: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+        .info-row-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .info-label-center {
+            font-size: 11px;
+            color: #888;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        /* 六色立體柔和霓虹光暈 */
+        .c-office-1 { box-shadow: 0 0 10px 1px rgba(230, 126, 34, 0.55); } 
+        .c-office-2 { box-shadow: 0 0 10px 1px rgba(241, 196, 15, 0.6); }  
+        .c-office-3 { box-shadow: 0 0 10px 1px rgba(46, 204, 113, 0.6); }  
+        .c-office-4 { box-shadow: 0 0 10px 1px rgba(52, 152, 219, 0.55); } 
+        .c-office-5 { box-shadow: 0 0 10px 1px rgba(149, 165, 166, 0.55); } 
+        .c-office-6 { box-shadow: 0 0 10px 1px rgba(210, 150, 255, 0.65); } 
+        .c-pres { box-shadow: 0 0 10px 1px rgba(231, 76, 60, 0.65); }       
+        
+        /* 儲存格懸停 (Hover) */
+        .card:hover {
+            transform: scale(1.2);
+            background: #ffffff;
+            z-index: 2; 
+        }
+        .c-office-1:hover { box-shadow: 0 0 16px 3px rgba(230, 126, 34, 0.8); }
+        .c-office-2:hover { box-shadow: 0 0 16px 3px rgba(241, 196, 15, 0.85); }
+        .c-office-3:hover { box-shadow: 0 0 16px 3px rgba(46, 204, 113, 0.85); }
+        .c-office-4:hover { box-shadow: 0 0 16px 3px rgba(52, 152, 219, 0.85); }
+        .c-office-5:hover { box-shadow: 0 0 16px 3px rgba(149, 165, 166, 0.8); }
+        .c-office-6:hover { box-shadow: 0 0 16px 3px rgba(140, 60, 200, 0.85); }
+        .c-pres:hover { box-shadow: 0 0 16px 4px rgba(231, 76, 60, 0.9); } 
+
+        /* 處室頂部標題膠囊 */
+        .card-header {
+            font-weight: 700;
+            font-size: 20px;
+            padding: 5px 2px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            cursor: default;
+            line-height: 1.8;
+            white-space: nowrap; 
+        }
+        .card-header:hover { transform: none; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+        .c-office-1.card-header { color: #d35400; }
+        .c-office-2.card-header { color: #f39c12; }
+        .c-office-3.card-header { color: #27ae60; } 
+        .c-office-4.card-header { color: #2980b9; } 
+        .c-office-5.card-header { color: #7f8c8d; }
+        .c-office-6.card-header { color: #8e44ad; }
+
+        /* 第一行組別職位超連結 */
+        .code-link {
+            font-size: 15px;
+            color: #888;
+            font-weight: 400;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            cursor: pointer;
+        }
+        .code-link:hover {
+            color: #EA0000;
+            text-decoration: underline;
+        }
+        
+        /* 第二行中間主要文字/姓名 */
+        .name-main {
+            font-size: 18px;      
+            font-weight: 800;     
+            color: #1a252f;       
+        }
+        
+        /* 第三行超連結小圖示 */
+        .icon-link {
+            font-size: 15px;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            display: inline-block;
+            line-height: 1;
+            margin-top: 1px;
+        }
+        .icon-link:hover {
+            transform: scale(1.8);
+        }
+
+        /* 👑 專屬：校長室三行文字獨立微調控制 */
+        .pres-title {
+            font-size: 12px;       
+            color: #e74c3c;        
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .pres-name {
+            font-size: 20px;       
+            color: #c0392b;        
+            font-weight: 800;
+        }
+        .pres-icon {
+            font-size: 18px;       
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 標題 -->
+    <div class="page-title">行政單位區</div>
+
+    <!-- 區塊：頂部膠囊控制區 -->
+    <div class="top-row">
+        
+        <!-- ================================================================= -->
+        <!-- ⚙️ 寬度調整：修改下方 style 中的 max-width 可控制「基本資訊大膠囊」寬度 -->
+        <!-- ================================================================= -->
+        <div class="card c-office-5" style="max-width: 446px; padding: 16px 16px;">
+            <div class="info-combo-box-center">
+                <!-- 第一行：住址 -->
+                 <div class="info-row-item">
+                    <span class="name-main" style="font-size: 13px; font-weight: 500;">校址：高雄市三民區大昌一路200號 <span style="font-size:10px; color:#aaa;">(80785)</span></span>
+                </div>
+                <!-- 第二行：電話 -->
+                <div class="info-row-item">
+                    <span class="name-main" style="font-size: 13px;">電話：(07)3813210 傳真：(07)3837947 
+                    </span>
+                </div>
+                <!-- 第三行：服務信箱 -->
+                <div class="info-row-item">
+                    <span class="name-main" style="font-size: 13px; word-break: break-all; color:#2980b9;">服務信箱：jjps_service@mail.jjps.kh.edu.tw
+                    <span href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link" title="點擊寄信">✉️</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- ⚙️ 寬度調整：修改下方 style 中的 max-width 可控制「校長膠囊」寬度 -->
+        <!-- ================================================================= -->
+        <div class="card c-pres" style="max-width: 446px; padding: 12px 12px;">
+            <a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="pres-title">👤 領導中心</a>
+            <span class="pres-name">陳明勇 校長</span>
+            <a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link pres-icon" title="聯絡校長">✉️</a>
+        </div>
+
+    </div>
+
+    <!-- 主區塊：四大處室 -->
+    <div class="grid-container">
+        <!-- 教務處 -->
+        <div class="grid-column">
+            <div class="card card-header c-office-1">教務處</div>
+            <div class="card c-office-1"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">主任</a><span class="name-main" style="color: #2980b9;">曹立群</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-1"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">教學組</a><span class="name-main" style="color: #e74c3c;">周思奴</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-1"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">註冊組</a><span class="name-main" style="color: #2980b9;">郭明佳</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-1"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">研資組</a><span class="name-main" style="color: #e74c3c;">陳郁云</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-1"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">資訊組</a><span class="name-main" style="color: #2980b9;">洪靖斌</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+        </div>
+
+        <!-- 學務處 -->
+        <div class="grid-column">
+            <div class="card card-header c-office-2">學務處</div>
+            <div class="card c-office-2"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">主任</a><span class="name-main" style="color: #e74c3c;">邱女玲</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-2"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">生教組</a><span class="name-main" style="color: #2980b9;">胡光達</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-2"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">訓育組</a><span class="name-main" style="color: #e74c3c;">賴玉玲</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-2"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">體育組</a><span class="name-main" style="color: #2980b9;">李金孝</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-2"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">衛生組</a><span class="name-main" style="color: #2980b9;">周立軒</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-2"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">午餐執秘</a><span class="name-main" style="color: #e74c3c;">陳凱筑</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-2"><a href="#" class="code-link">健康中心</a><span class="name-main" style="color: #e74c3c;">護理師</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+        </div>
+
+        <!-- 總務處 -->
+        <div class="grid-column">
+            <div class="card card-header c-office-3">總務處</div>
+            <div class="card c-office-3"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">主任</a><span class="name-main" style="color: #e74c3c;">李淑華</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-3"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">事務組</a><span class="name-main" style="color: #e74c3c;">魏煜珊</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-3"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">出納組</a><span class="name-main" style="color: #2980b9;">怯慈航</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-3"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">文書組</a><span class="name-main" style="color: #2980b9;">李宗欣</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+        </div>
+
+        <!-- 輔導處 -->
+        <div class="grid-column">
+            <div class="card card-header c-office-4">輔導處</div>
+            <div class="card c-office-4"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">主任</a><span class="name-main" style="color: #2980b9;">李正男</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-4"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">輔導組</a><span class="name-main" style="color: #e74c3c;">張容禎</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-4"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">親職組</a><span class="name-main" style="color: #e74c3c;">黃瓅瑩</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-4"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">特教組</a><span class="name-main" style="color: #e74c3c;">邱子容</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+            <div class="card c-office-4"><a href="#" class="code-link">志工團</a><span class="name-main" style="color: #27ae60;">志工隊</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+        </div>
+    </div>
+
+    <!-- 獨立區塊：人事/會計/幼兒園 -->
+    <div class="grid-container">
+        <div class="grid-column" style="width: 150px;">
+            <div class="card card-header c-office-5">人事室</div>
+            <div class="card c-office-5"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">主任</a><span class="name-main" style="color: #2980b9;">楊智淵</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+        </div>
+        <div class="grid-column" style="width: 150px;">
+            <div class="card card-header c-office-5">會計室</div>
+            <div class="card c-office-5"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">主任-1</a><span class="name-main" style="color: #e74c3c; font-size:18px;">黃鄭意蓮</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+        </div>
+        <div class="grid-column" style="width: 150px;">
+            <div class="card card-header c-office-5">幼兒園</div>
+            <div class="card c-office-5"><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="code-link">主任</a><span class="name-main" style="color: #e74c3c;">張美筠</span><a href="mailto:jjps_service@mail.jjps.kh.edu.tw" class="icon-link">✉️</a></div>
+        </div>
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- ⚙️ 單獨寬度調整區：修改下方每個 style 中的 width 可獨立控制每列紫色膠囊寬度 -->
+    <!-- ================================================================= -->
+    <div class="grid-container" style="margin-top: 10px;">
+        
+        <!-- ⚙️ 第 1 列 (校園專區) -->
+        <div class="grid-column" style="width: 150px;">
+            <div class="card c-office-6"><a href="#" class="code-link">附屬單位</a><span class="name-main" style="font-size: 18px;">午餐辦公室</span><a href="#" class="icon-link" title="前往首頁">🏠</a></div>
+            <div class="card c-office-6"><a href="#" class="code-link">附屬單位</a><span class="name-main" style="font-size: 18px;">健康促進</span><a href="#" class="icon-link" title="前往首頁">🏠</a></div>
+        </div>
+        
+        <!-- ⚙️ 第 2 列 (家長自治) -->
+        <div class="grid-column" style="width: 150px;">
+            <div class="card c-office-6"><a href="#" class="code-link">附屬單位</a><span class="name-main" style="font-size: 18px;">莊敬家長會</span><a href="#" class="icon-link" title="前往首頁">🏠</a></div>
+            <div class="card c-office-6"><a href="#" class="code-link">附屬單位</a><span class="name-main" style="font-size: 18px;">自治小市府</span><a href="#" class="icon-link" title="前往首頁">🏠</a></div>
+			<div class="card c-office-6"><a href="#" class="code-link">附屬單位</a><span class="name-main" style="font-size: 18px;">莊敬圖書館</span><a href="#" class="icon-link" title="前往首頁">🏠</a></div>
+        </div>
+        
+        <!-- ⚙️ 第 3 列 (校園安全) -->
+        <div class="grid-column" style="width: 150px;">
+            <div class="card c-office-6"><a href="#" class="code-link">附屬單位</a><span class="name-main" style="font-size: 18px;">交通安全</span><a href="#" class="icon-link" title="前往首頁">🏠</a></div>
+            <div class="card c-office-6"><a href="#" class="code-link">附屬單位</a><span class="name-main" style="font-size: 18px;">歌謠團隊</span><a href="#" class="icon-link" title="前往首頁">🏠</a></div>
+        </div>
+        
+        
+    </div>
+
+</div>
+
+</body>
+</html>
